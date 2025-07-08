@@ -58,13 +58,13 @@ const InputForm = ({ onGenerateReport, reportData }) => {
     e.preventDefault();
     if (validateForm()) {
       onGenerateReport(formData);
-      toast.success("✅ Report generated and saved!");
+      toast.success("Report generated and saved!");
     } else {
-      toast.error("❌ Please fix errors before submitting.");
+      toast.error("Please fix errors before submitting.");
     }
   };
 
-  const handleDownloadPDF = () => {
+  const downloadPDF = () => {
     if (!reportData || reportData.length === 0) {
       toast.warning("Please generate a report first.");
       return;
@@ -118,14 +118,6 @@ const InputForm = ({ onGenerateReport, reportData }) => {
             className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold"
           >
             Generate Report
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDownloadPDF}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold"
-          >
-            Download PDF
           </button>
 
           <button

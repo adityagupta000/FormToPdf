@@ -1,25 +1,35 @@
-import { useFormConfig } from "../../contexts/FormConfigContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const API_URL = "http://localhost:5000";
 
 const CategoryManager = () => {
-  const { state, dispatch } = useFormConfig();
+  const [categories, setCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
   const [editIndex, setEditIndex] = useState(null);
   const [editedName, setEditedName] = useState("");
 
-  const categories = state.categories;
+  // 🔁 Fetch from server
+  const fetchCategories = async () => {
+    try {
+      const res = await fetch(`${API_URL}/categories`);
+      const data = await res.json();
+      setCategories(data);
+    } catch (err) {
+      toast.error("❌ Failed to load categories");
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
 
   // ➕ Add
   const addCategory = async () => {
     const trimmed = newCategory.trim();
     if (!trimmed) return;
 
-    const exists = categories.some((c) =>
-      typeof c === "string" ? c === trimmed : c.name === trimmed
-    );
+    const exists = categories.some((c) => c.name === trimmed);
     if (exists) {
       toast.error("🚫 Category already exists");
       return;
@@ -32,10 +42,9 @@ const CategoryManager = () => {
     });
 
     if (res.ok) {
-      const newCat = await res.json();
-      dispatch({ type: "ADD_CATEGORY", name: newCat.name });
       toast.success("✅ Category added");
       setNewCategory("");
+      fetchCategories(); // 🔁 refresh list
     }
   };
 
@@ -49,24 +58,19 @@ const CategoryManager = () => {
   const confirmEdit = async () => {
     if (!editedName.trim()) return;
 
-    const old = categories[editIndex];
-    const catId = typeof old === "object" ? old.id : null;
+    const cat = categories[editIndex];
 
-    const res = await fetch(`${API_URL}/categories/${catId}`, {
+    const res = await fetch(`${API_URL}/categories/${cat.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: catId, name: editedName.trim() }),
+      body: JSON.stringify({ ...cat, name: editedName.trim() }),
     });
 
     if (res.ok) {
-      dispatch({
-        type: "UPDATE_CATEGORY",
-        index: editIndex,
-        newName: editedName.trim(),
-      });
       toast.success("✏️ Category updated");
       setEditIndex(null);
       setEditedName("");
+      fetchCategories(); // 🔁 refresh
     } else {
       toast.error("❌ Failed to update category");
     }
@@ -75,18 +79,16 @@ const CategoryManager = () => {
   // 🗑️ Delete
   const deleteCategory = async (index) => {
     const cat = categories[index];
-    const catId = typeof cat === "object" ? cat.id : null;
-    const catName = typeof cat === "string" ? cat : cat.name;
 
-    if (!window.confirm(`Delete category "${catName}"?`)) return;
+    if (!window.confirm(`Delete category "${cat.name}"?`)) return;
 
-    const res = await fetch(`${API_URL}/categories/${catId}`, {
+    const res = await fetch(`${API_URL}/categories/${cat.id}`, {
       method: "DELETE",
     });
 
     if (res.ok) {
-      dispatch({ type: "DELETE_CATEGORY", index });
       toast.info("🗑️ Category deleted");
+      fetchCategories(); // 🔁 refresh
     } else {
       toast.error("❌ Failed to delete category");
     }
@@ -108,56 +110,51 @@ const CategoryManager = () => {
           onClick={addCategory}
           className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded"
         >
-          ➕ Add
+          Add
         </button>
       </div>
 
       <div className="space-y-3">
-        {categories.map((cat, i) => {
-          const catName = typeof cat === "string" ? cat : cat.name;
+        {categories.map((cat, i) => (
+          <div
+            key={cat.id}
+            className="flex items-center justify-between bg-white border p-3 rounded"
+          >
+            {editIndex === i ? (
+              <>
+                <input
+                  type="text"
+                  className="border px-2 py-1 rounded w-full mr-2"
+                  value={editedName}
+                  onChange={(e) => setEditedName(e.target.value)}
+                />
+                <button
+                  onClick={confirmEdit}
+                  className="bg-blue-600 text-white px-3 py-1 rounded"
+                ></button>
+              </>
+            ) : (
+              <>
+                <span>{cat.name}</span>
 
-          return (
-            <div
-              key={i}
-              className="flex items-center justify-between bg-white border p-3 rounded"
-            >
-              {editIndex === i ? (
-                <>
-                  <input
-                    type="text"
-                    className="border px-2 py-1 rounded w-full mr-2"
-                    value={editedName}
-                    onChange={(e) => setEditedName(e.target.value)}
-                  />
+                <div className="flex gap-2">
                   <button
-                    onClick={confirmEdit}
-                    className="bg-blue-600 text-white px-3 py-1 rounded"
+                    onClick={() => startEdit(i, cat.name)}
+                    className="inline-flex items-center px-3 py-1 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 transition"
                   >
-                    ✅
+                    Edit
                   </button>
-                </>
-              ) : (
-                <>
-                  <span>{catName}</span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => startEdit(i, catName)}
-                      className="text-blue-600 hover:underline"
-                    >
-                      ✏️ Edit
-                    </button>
-                    <button
-                      onClick={() => deleteCategory(i)}
-                      className="text-red-600 hover:underline"
-                    >
-                      🗑️ Delete
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          );
-        })}
+                  <button
+                    onClick={() => deleteCategory(i)}
+                    className="inline-flex items-center px-3 py-1 bg-red-600 text-white text-sm rounded-md hover:bg-red-700 transition"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

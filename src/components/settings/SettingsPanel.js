@@ -70,10 +70,10 @@ const SettingsPanel = () => {
       if (!res.ok) throw new Error("Failed to save settings");
 
       dispatch({ type: "UPDATE_SETTINGS", settings }); // update UI too
-      toast.success("✅ Settings saved to server!");
+      toast.success("Settings saved to server!");
     } catch (error) {
       console.error(error);
-      toast.error("❌ Failed to save settings");
+      toast.error("Failed to save settings");
     }
   };
 

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 const ResetAll = () => {
   const handleReset = () => {
     const confirmReset = window.confirm(
-      "⚠️ This will erase all unsaved changes and restore the app to its default state. Continue?"
+      "This will erase all unsaved changes and restore the app to its default state. Continue?"
     );
 
     if (!confirmReset) return;
@@ -14,7 +14,7 @@ const ResetAll = () => {
     // Optionally remove other keys if added later (e.g., config, theme)
     // localStorage.removeItem('genomics_config');
 
-    toast.success("🔄 App state reset. Reloading...");
+    toast.success("App state reset. Reloading...");
 
     setTimeout(() => {
       window.location.reload(); // reload default from formConfig.json
