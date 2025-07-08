@@ -15,6 +15,8 @@
       "id": "carb",
       "label": "Carbohydrate Sensitivity",
       "category": "MACRONUTRIENTS",
+      "min": 1,
+      "max": 10,
       "high": "Maintain carb intake <45%\nFor obesity & IR control",
       "normal": "Maintain carb intake <50%\nBalanced recommendation",
       "low": "Maintain carb intake <60%\nFor obesity & IR control"
@@ -23,6 +25,8 @@
       "id": "fat",
       "label": "Fat Sensitivity",
       "category": "MACRONUTRIENTS",
+      "min": 1,
+      "max": 10,
       "high": "Fat intake not to exceed\n15% of total calories",
       "normal": "Fat intake should be\n20% of total calories",
       "low": "Fat intake advised up to\n25% of total calories"
@@ -31,6 +35,8 @@
       "id": "protein",
       "label": "Protein Requirement",
       "category": "MACRONUTRIENTS",
+      "min": 1,
+      "max": 15,
       "high": "Protein supplements\nneeded along with dietary\nsource",
       "normal": "Maintain adequate protein\nthrough balanced diet and\noccasional supplements",
       "low": "Protein supplements not\nneeded, intake through\ndiet is enough"
@@ -39,6 +45,8 @@
       "id": "meal",
       "label": "Meal Frequency",
       "category": "MEAL PATTERN",
+      "min": 1,
+      "max": 10,
       "high": "4-5 small meals suggested\nin a day",
       "normal": "3-4 balanced meals\nrecommended per day",
       "low": "Less frequent meals, 2-3\nmeals are enough in a day"
@@ -47,6 +55,8 @@
       "id": "alcohol",
       "label": "Alcohol Sensitivity",
       "category": "",
+      "min": 1,
+      "max": 6,
       "high": "High sensitivity, avoid\nalcohol if possible,\nespecially the types of\nbeverages that trigger\nintolerance reaction.",
       "normal": "Moderate sensitivity,\nlimit alcohol consumption\nto 1-2 drinks per day,\nmonitor for any adverse\nreactions",
       "low": "Low sensitivity, know\nyour alcohol intake limits,\nconsult doctor for\nknowing your upper limit\nof intake"
@@ -55,6 +65,8 @@
       "id": "caffeine",
       "label": "Caffeine Sensitivity",
       "category": "",
+      "min": 1,
+      "max": 5,
       "high": "High sensitivity, do not\nconsume >4 cups/day",
       "normal": "Moderate sensitivity,\nlimit caffeine to 4-5\ncups per day",
       "low": "Caffeine up to 5 cups a\nday can be consumed"
@@ -63,6 +75,8 @@
       "id": "gluten",
       "label": "Gluten Sensitivity",
       "category": "FOOD SENSITIVITIES",
+      "min": 1,
+      "max": 10,
       "high": "Gluten intake needs to be\nreduced/stopped",
       "normal": "Monitor gluten intake,\nreduce if experiencing\ndigestive issues",
       "low": "Gluten to be avoided in\ncases of gastric distress"
@@ -71,6 +85,8 @@
       "id": "lactose",
       "label": "Lactose Sensitivity",
       "category": "FOOD SENSITIVITIES",
+      "min": 1,
+      "max": 10,
       "high": "Milk & milk products need\nto be avoided",
       "normal": "Limit milk & milk products,\nconsider lactose-free\nalternatives if needed",
       "low": "Milk or milk products to\nbe avoided in gastric\ndistress"
@@ -79,6 +95,8 @@
       "id": "salt",
       "label": "Salt Sensitivity",
       "category": "",
+      "min": 1,
+      "max": 8,
       "high": "Try to reduce overall salt\nintake to up to 3-5 gm per\nday",
       "normal": "Maintain salt intake\naround 5 gm per day",
       "low": "Consumption of salt up to\n5 gm/day can be done"

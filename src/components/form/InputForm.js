@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useExcelExport } from "../../hooks/useExcelExport";
 import { useFormConfig } from "../../contexts/FormConfigContext";
 import { usePDFGeneration } from "../../hooks/usePDFGeneration";
 import { isValidScore } from "../../utils/helpers";
@@ -19,6 +20,8 @@ const InputForm = ({ onGenerateReport, reportData }) => {
       return {};
     }
   });
+
+  const { exportToExcel } = useExcelExport();
 
   const [errors, setErrors] = useState({});
 
@@ -131,6 +134,13 @@ const InputForm = ({ onGenerateReport, reportData }) => {
             className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold"
           >
             Clear Input
+          </button>
+          <button
+            type="button"
+            onClick={() => exportToExcel(reportData)}
+            className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-lg font-semibold"
+          >
+            📄 Export Excel
           </button>
         </div>
       </form>

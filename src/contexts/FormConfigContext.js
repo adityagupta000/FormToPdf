@@ -38,6 +38,41 @@ const formConfigReducer = (state, action) => {
         ...action.config,
       };
 
+    case "REORDER_FIELDS":
+      return {
+        ...state,
+        fields: action.fields,
+      };
+    case "ADD_CATEGORY":
+      return {
+        ...state,
+        categories: [...state.categories, action.name],
+      };
+
+    case "UPDATE_CATEGORY":
+      return {
+        ...state,
+        categories: state.categories.map((cat, i) =>
+          i === action.index ? action.newName : cat
+        ),
+        fields: state.fields.map((field) =>
+          field.category === state.categories[action.index]
+            ? { ...field, category: action.newName }
+            : field
+        ),
+      };
+
+    case "DELETE_CATEGORY":
+      return {
+        ...state,
+        categories: state.categories.filter((_, i) => i !== action.index),
+        fields: state.fields.map((field) =>
+          field.category === state.categories[action.index]
+            ? { ...field, category: "" }
+            : field
+        ),
+      };
+
     default:
       return state;
   }

@@ -1,7 +1,9 @@
-import React, { useState , useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useFormConfig } from "../../contexts/FormConfigContext";
 import { useConfigImportExport } from "../../hooks/useConfigImportExport";
 import { toast } from "react-toastify";
+import ResetAll from "../common/ResetAll";
+import CategoryManager from "./CategoryManager";
 
 const SettingsPanel = () => {
   const { state, dispatch } = useFormConfig();
@@ -72,7 +74,7 @@ const SettingsPanel = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6">🎛️ Form Customization</h2>
+      <h2 className=" bg-white text-2xl font-bold mb-6">🎛️ Form Customization</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Section */}
@@ -207,6 +209,9 @@ const SettingsPanel = () => {
         >
           📥 Import Config (.json)
         </button>
+        <div className="mt-6">
+          <ResetAll />
+        </div>
 
         <input
           type="file"
@@ -215,6 +220,9 @@ const SettingsPanel = () => {
           className="hidden"
           onChange={handleFileSelected}
         />
+      </div>
+      <div className="mt-6">
+        <CategoryManager />
       </div>
     </div>
   );
