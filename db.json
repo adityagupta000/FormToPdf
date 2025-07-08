@@ -1,15 +1,21 @@
 {
-  "title": "GENOMICS & DIET",
-  "quote": "\"YOU ARE WHAT YOU EAT\" - Victor Lindlahr",
-  "description": "A right diet is the one that makes you feel happy, keeps you healthy, does not make you feel starved and prevents several health issues. Information present in our genes can be used to fine tune our diet to make it personalised. Based on your genetic make up, we share with you the diet pattern that you should be following for a healthy and happy lifestyle.",
-  "headerColor": "#16a34a",
-  "colors": {
-    "low": "#16a34a",
-    "medium": "#f59e0b",
-    "high": "#dc2626"
+  "settings": {
+    "title": "GENOMICS & DIET",
+    "quote": "\"YOU ARE WHAT YOU EAT\" - Victor Lindlahr",
+    "description": "A right diet is the one that makes you feel happy, keeps you healthy, does not make you feel starved and prevents several health issues. Information present in our genes can be used to fine tune our diet to make it personalised. Based on your genetic make up, we share with you the diet pattern that you should be following for a healthy and happy lifestyle.",
+    "headerColor": "#16a34a",
+    "colors": {
+      "low": "#16a34a",
+      "medium": "#f59e0b",
+      "high": "#dc2626"
+    },
+    "highThreshold": 6
   },
-  "highThreshold": 6,
-  "categories": ["MACRONUTRIENTS", "MEAL PATTERN", "FOOD SENSITIVITIES"],
+  "categories": [
+    { "id": 1, "name": "MACRONUTRIENTS" },
+    { "id": 2, "name": "MEAL PATTERN" },
+    { "id": 3, "name": "FOOD SENSITIVITIES" }
+  ],
   "fields": [
     {
       "id": "carb",

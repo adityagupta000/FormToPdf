@@ -5,10 +5,11 @@ import { toast } from "react-toastify";
 import ResetAll from "../common/ResetAll";
 import CategoryManager from "./CategoryManager";
 
+const API_URL = "http://localhost:5000";
+
 const SettingsPanel = () => {
   const { state, dispatch } = useFormConfig();
 
-  // Internal editable state
   const [settings, setSettings] = useState({
     title: state.title,
     quote: state.quote,
@@ -39,7 +40,7 @@ const SettingsPanel = () => {
     e.target.value = ""; // reset input
   };
 
-  // Change handlers
+  // 🔁 Update local state as user types
   const handleChange = (key, value) => {
     setSettings((prev) => ({
       ...prev,
@@ -57,24 +58,38 @@ const SettingsPanel = () => {
     }));
   };
 
-  // Apply changes to context
-  const applySettings = () => {
-    dispatch({ type: "UPDATE_SETTINGS", settings });
-    alert("✅ Settings applied successfully!");
+  // 💾 Save to backend
+  const applySettings = async () => {
+    try {
+      const res = await fetch(`${API_URL}/settings`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(settings),
+      });
+
+      if (!res.ok) throw new Error("Failed to save settings");
+
+      dispatch({ type: "UPDATE_SETTINGS", settings }); // update UI too
+      toast.success("✅ Settings saved to server!");
+    } catch (error) {
+      console.error(error);
+      toast.error("❌ Failed to save settings");
+    }
   };
 
-  // Reset to initial/default config
   const resetSettings = () => {
     if (
       window.confirm("Are you sure you want to reset all settings to default?")
     ) {
-      window.location.reload(); // simplest way to reload JSON state
+      window.location.reload(); // simplest way
     }
   };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className=" bg-white text-2xl font-bold mb-6">🎛️ Form Customization</h2>
+      <h2 className=" bg-white text-2xl font-bold mb-6">
+        🎛️ Form Customization
+      </h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Section */}
@@ -149,41 +164,27 @@ const SettingsPanel = () => {
           <h3 className="text-lg font-semibold mt-6">🎨 Score Colors</h3>
 
           <div className="space-y-2">
-            <div>
-              <label className="block text-sm font-medium mb-1">High</label>
-              <input
-                type="color"
-                value={settings.colors.high}
-                onChange={(e) => handleColorChange("high", e.target.value)}
-                className="h-10 w-full border rounded"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Medium</label>
-              <input
-                type="color"
-                value={settings.colors.medium}
-                onChange={(e) => handleColorChange("medium", e.target.value)}
-                className="h-10 w-full border rounded"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1">Low</label>
-              <input
-                type="color"
-                value={settings.colors.low}
-                onChange={(e) => handleColorChange("low", e.target.value)}
-                className="h-10 w-full border rounded"
-              />
-            </div>
+            <ColorInput
+              label="High"
+              value={settings.colors.high}
+              onChange={(val) => handleColorChange("high", val)}
+            />
+            <ColorInput
+              label="Medium"
+              value={settings.colors.medium}
+              onChange={(val) => handleColorChange("medium", val)}
+            />
+            <ColorInput
+              label="Low"
+              value={settings.colors.low}
+              onChange={(val) => handleColorChange("low", val)}
+            />
           </div>
         </div>
       </div>
 
       {/* Buttons */}
-      <div className="mt-6 flex gap-4">
+      <div className="mt-6 flex flex-wrap gap-4">
         <button
           onClick={applySettings}
           className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold"
@@ -209,7 +210,8 @@ const SettingsPanel = () => {
         >
           📥 Import Config (.json)
         </button>
-        <div className="mt-6">
+
+        <div className="mt-2">
           <ResetAll />
         </div>
 
@@ -221,11 +223,25 @@ const SettingsPanel = () => {
           onChange={handleFileSelected}
         />
       </div>
+
+      {/* ⬇️ Category management (uses API now) */}
       <div className="mt-6">
         <CategoryManager />
       </div>
     </div>
   );
 };
+
+const ColorInput = ({ label, value, onChange }) => (
+  <div>
+    <label className="block text-sm font-medium mb-1">{label}</label>
+    <input
+      type="color"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      className="h-10 w-full border rounded"
+    />
+  </div>
+);
 
 export default SettingsPanel;

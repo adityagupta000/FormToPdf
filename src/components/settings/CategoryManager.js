@@ -1,34 +1,94 @@
-import { useFormConfig } from '../../contexts/FormConfigContext';
-import { useState } from 'react';
+import { useFormConfig } from "../../contexts/FormConfigContext";
+import { useState } from "react";
+import { toast } from "react-toastify";
+
+const API_URL = "http://localhost:5000";
 
 const CategoryManager = () => {
   const { state, dispatch } = useFormConfig();
-  const [newCategory, setNewCategory] = useState('');
+  const [newCategory, setNewCategory] = useState("");
   const [editIndex, setEditIndex] = useState(null);
-  const [editedName, setEditedName] = useState('');
+  const [editedName, setEditedName] = useState("");
 
-  const addCategory = () => {
-    if (!newCategory.trim()) return;
-    if (state.categories.includes(newCategory)) return;
-    dispatch({ type: 'ADD_CATEGORY', name: newCategory.trim() });
-    setNewCategory('');
+  const categories = state.categories;
+
+  // ➕ Add
+  const addCategory = async () => {
+    const trimmed = newCategory.trim();
+    if (!trimmed) return;
+
+    const exists = categories.some((c) =>
+      typeof c === "string" ? c === trimmed : c.name === trimmed
+    );
+    if (exists) {
+      toast.error("🚫 Category already exists");
+      return;
+    }
+
+    const res = await fetch(`${API_URL}/categories`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: trimmed }),
+    });
+
+    if (res.ok) {
+      const newCat = await res.json();
+      dispatch({ type: "ADD_CATEGORY", name: newCat.name });
+      toast.success("✅ Category added");
+      setNewCategory("");
+    }
   };
 
+  // ✏️ Start editing
   const startEdit = (i, name) => {
     setEditIndex(i);
     setEditedName(name);
   };
 
-  const confirmEdit = () => {
+  // ✅ Confirm edit
+  const confirmEdit = async () => {
     if (!editedName.trim()) return;
-    dispatch({ type: 'UPDATE_CATEGORY', index: editIndex, newName: editedName.trim() });
-    setEditIndex(null);
-    setEditedName('');
+
+    const old = categories[editIndex];
+    const catId = typeof old === "object" ? old.id : null;
+
+    const res = await fetch(`${API_URL}/categories/${catId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: catId, name: editedName.trim() }),
+    });
+
+    if (res.ok) {
+      dispatch({
+        type: "UPDATE_CATEGORY",
+        index: editIndex,
+        newName: editedName.trim(),
+      });
+      toast.success("✏️ Category updated");
+      setEditIndex(null);
+      setEditedName("");
+    } else {
+      toast.error("❌ Failed to update category");
+    }
   };
 
-  const deleteCategory = (i) => {
-    if (window.confirm('Remove this category?')) {
-      dispatch({ type: 'DELETE_CATEGORY', index: i });
+  // 🗑️ Delete
+  const deleteCategory = async (index) => {
+    const cat = categories[index];
+    const catId = typeof cat === "object" ? cat.id : null;
+    const catName = typeof cat === "string" ? cat : cat.name;
+
+    if (!window.confirm(`Delete category "${catName}"?`)) return;
+
+    const res = await fetch(`${API_URL}/categories/${catId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      dispatch({ type: "DELETE_CATEGORY", index });
+      toast.info("🗑️ Category deleted");
+    } else {
+      toast.error("❌ Failed to delete category");
     }
   };
 
@@ -53,47 +113,51 @@ const CategoryManager = () => {
       </div>
 
       <div className="space-y-3">
-        {state.categories.map((cat, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between bg-white border p-3 rounded"
-          >
-            {editIndex === i ? (
-              <>
-                <input
-                  type="text"
-                  className="border px-2 py-1 rounded w-full mr-2"
-                  value={editedName}
-                  onChange={(e) => setEditedName(e.target.value)}
-                />
-                <button
-                  onClick={confirmEdit}
-                  className="bg-blue-600 text-white px-3 py-1 rounded"
-                >
-                  ✅
-                </button>
-              </>
-            ) : (
-              <>
-                <span>{cat}</span>
-                <div className="flex gap-2">
+        {categories.map((cat, i) => {
+          const catName = typeof cat === "string" ? cat : cat.name;
+
+          return (
+            <div
+              key={i}
+              className="flex items-center justify-between bg-white border p-3 rounded"
+            >
+              {editIndex === i ? (
+                <>
+                  <input
+                    type="text"
+                    className="border px-2 py-1 rounded w-full mr-2"
+                    value={editedName}
+                    onChange={(e) => setEditedName(e.target.value)}
+                  />
                   <button
-                    onClick={() => startEdit(i, cat)}
-                    className="text-blue-600 hover:underline"
+                    onClick={confirmEdit}
+                    className="bg-blue-600 text-white px-3 py-1 rounded"
                   >
-                    ✏️ Edit
+                    ✅
                   </button>
-                  <button
-                    onClick={() => deleteCategory(i)}
-                    className="text-red-600 hover:underline"
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        ))}
+                </>
+              ) : (
+                <>
+                  <span>{catName}</span>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => startEdit(i, catName)}
+                      className="text-blue-600 hover:underline"
+                    >
+                      ✏️ Edit
+                    </button>
+                    <button
+                      onClick={() => deleteCategory(i)}
+                      className="text-red-600 hover:underline"
+                    >
+                      🗑️ Delete
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
