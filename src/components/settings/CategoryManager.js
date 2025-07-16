@@ -16,7 +16,7 @@ const CategoryManager = () => {
       const data = await res.json();
       setCategories(data);
     } catch (err) {
-      toast.error("❌ Failed to load categories");
+      toast.error("Failed to load categories");
     }
   };
 
@@ -31,7 +31,7 @@ const CategoryManager = () => {
 
     const exists = categories.some((c) => c.name === trimmed);
     if (exists) {
-      toast.error("🚫 Category already exists");
+      toast.error("Category already exists");
       return;
     }
 
@@ -42,7 +42,7 @@ const CategoryManager = () => {
     });
 
     if (res.ok) {
-      toast.success("✅ Category added");
+      toast.success("Category added");
       setNewCategory("");
       fetchCategories(); // 🔁 refresh list
     }
@@ -67,7 +67,7 @@ const CategoryManager = () => {
     });
 
     if (res.ok) {
-      toast.success("✏️ Category updated");
+      toast.success("Category updated");
       setEditIndex(null);
       setEditedName("");
       fetchCategories(); // 🔁 refresh
@@ -87,16 +87,16 @@ const CategoryManager = () => {
     });
 
     if (res.ok) {
-      toast.info("🗑️ Category deleted");
+      toast.info("Category deleted");
       fetchCategories(); // 🔁 refresh
     } else {
-      toast.error("❌ Failed to delete category");
+      toast.error("Failed to delete category");
     }
   };
 
   return (
     <div className="mt-10 border-t pt-6">
-      <h3 className="text-xl font-semibold mb-4">🗂️ Category Manager</h3>
+      <h3 className="text-xl font-semibold mb-4">Category Manager</h3>
 
       <div className="flex gap-2 mb-4">
         <input
@@ -130,8 +130,8 @@ const CategoryManager = () => {
                 />
                 <button
                   onClick={confirmEdit}
-                  className="bg-blue-600 text-white px-3 py-1 rounded"
-                ></button>
+                  className="bg-blue-600 text-white p-2 rounded"
+                >Save</button>
               </>
             ) : (
               <>

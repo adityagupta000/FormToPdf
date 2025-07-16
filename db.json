@@ -13,15 +13,15 @@
   },
   "categories": [
     {
-      "id": 1,
+      "id": "1",
       "name": "MACRONUTRIENTS"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "MEAL PATTERN"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "FOOD SENSITIVITIES"
     },
     {
@@ -31,96 +31,100 @@
   ],
   "fields": [
     {
-      "id": "carb",
-      "label": "Carbohydrate Sensitivit",
+      "id": "field_carb_1752645546685",
+      "_uuid": "01a65289-f147-459d-bb9d-3fded0529b76",
+      "_originalId": "field_carb_1752645546685",
+      "label": "carb",
       "category": "MACRONUTRIENTS",
       "min": 1,
       "max": 10,
-      "high": "Maintain carb intake <45%\nFor obesity & IR control",
-      "normal": "Maintain carb intake <50%\nBalanced recommendation",
-      "low": "Maintain carb intake <60%\nFor obesity & IR control",
-      "_uuid": "39cd7195-c000-46ca-8b31-b64bf4526b4b",
-      "_originalId": "carb"
+      "high": "Maintain carb intake 40% For obesity & IR control",
+      "normal": "Maintain carb intake 50%Balanced recommendation",
+      "low": "Maintain carb intake 60%For obesity & IR control"
     },
     {
-      "id": "fat",
+      "id": "field_fat_sensitivity_1752645768322",
+      "_uuid": "1124cfb9-2ac0-407f-8677-14d08aaa9143",
+      "_originalId": "field_fat_sensitivity_1752645768322",
       "label": "Fat Sensitivity",
       "category": "MACRONUTRIENTS",
       "min": 1,
       "max": 10,
-      "high": "Fat intake not to exceed\n15% of total calories",
-      "normal": "Fat intake should be\n20% of total calories",
-      "low": "Fat intake advised up to\n25% of total calories"
+      "high": "Fat intake not to exceed\\n15% of total calories",
+      "normal": "Fat intake should be\\n20% of total calories",
+      "low": "Fat intake advised up to\\n25% of total calories"
     },
     {
-      "id": "protein",
+      "id": "field_protein_requirement_1752645831504",
+      "_uuid": "f3d9af18-232e-4466-b0e5-7cdd92a8e477",
+      "_originalId": "field_protein_requirement_1752645831504",
       "label": "Protein Requirement",
       "category": "MACRONUTRIENTS",
       "min": 1,
-      "max": 15,
-      "high": "Protein supplements\nneeded along with dietary\nsource",
-      "normal": "Maintain adequate protein\nthrough balanced diet and\noccasional supplements",
-      "low": "Protein supplements not\nneeded, intake through\ndiet is enough"
+      "max": 10,
+      "high": "Protein supplements needed along with dietary source",
+      "normal": "Maintain adequate protein through balanced diet and occasional supplements",
+      "low": "Protein supplements not needed, intake through diet is enough"
     },
     {
-      "id": "meal",
+      "id": "field_meal_frequency_1752645937311",
+      "_uuid": "7afd567a-4a36-42f9-9f4f-2fdf9a95e0e2",
+      "_originalId": "field_meal_frequency_1752645937311",
       "label": "Meal Frequency",
       "category": "MEAL PATTERN",
       "min": 1,
       "max": 10,
-      "high": "4-5 small meals suggested\nin a day",
-      "normal": "3-4 balanced meals\nrecommended per day",
-      "low": "Less frequent meals, 2-3\nmeals are enough in a day"
+      "high": "4-5 small meals suggested in a day",
+      "normal": "3-4 balanced meals recommended per day",
+      "low": "Less frequent meals, 2-3 meals are enough in a day"
     },
     {
-      "id": "alcohol",
+      "id": "field_alcohol_sensitivity_1752646186761",
+      "_uuid": "caa203af-d06f-4a99-a7fc-b5665c9c6f82",
+      "_originalId": "field_alcohol_sensitivity_1752646186761",
       "label": "Alcohol Sensitivity",
       "category": "",
       "min": 1,
-      "max": 6,
-      "high": "High sensitivity, avoid\nalcohol if possible,\nespecially the types of\nbeverages that trigger\nintolerance reaction.",
-      "normal": "Moderate sensitivity,\nlimit alcohol consumption\nto 1-2 drinks per day,\nmonitor for any adverse\nreactions",
-      "low": "Low sensitivity, know\nyour alcohol intake limits,\nconsult doctor for\nknowing your upper limit\nof intake"
+      "max": 10,
+      "high": "High sensitivity, avoid alcohol, if possible, especially the types of beverages that trigger intolerance reaction.",
+      "normal": "Moderate sensitivity, limit alcohol consumption to 1-2 drinks per day, monitor for any adverse reactions",
+      "low": "Low sensitivity, know your alcohol intake limits, consult doctor for knowing your upper limit of intake"
     },
     {
-      "id": "caffeine",
+      "id": "field_caffeine_sensitivity_1752646351914",
+      "_uuid": "c14ecc31-3c3f-4b89-bdb4-67f9a0df6e8d",
+      "_originalId": "field_caffeine_sensitivity_1752646351914",
       "label": "Caffeine Sensitivity",
       "category": "",
       "min": 1,
-      "max": 5,
-      "high": "High sensitivity, do not\nconsume >4 cups/day",
-      "normal": "Moderate sensitivity,\nlimit caffeine to 4-5\ncups per day",
-      "low": "Caffeine up to 5 cups a\nday can be consumed"
+      "max": 10,
+      "high": "High sensitivity, do not consume >4 cups/day",
+      "normal": "Moderate sensitivity, limit caffeine to 4-5 cups per day",
+      "low": "Caffeine up to 5 cups a day can be consumed"
     },
     {
-      "id": "gluten",
+      "id": "field_gluten_sensitivity_1752646517788",
+      "_uuid": "af6eb4cb-15ca-4f5c-9c31-07ce400aa8aa",
+      "_originalId": "field_gluten_sensitivity_1752646517788",
       "label": "Gluten Sensitivity",
       "category": "FOOD SENSITIVITIES",
       "min": 1,
       "max": 10,
-      "high": "Gluten intake needs to be\nreduced/stopped",
-      "normal": "Monitor gluten intake,\nreduce if experiencing\ndigestive issues",
-      "low": "Gluten to be avoided in\ncases of gastric distress"
+      "high": "Gluten intake needs to be reduced stopped",
+      "normal": "Monitor gluten intake, reduce if experiencing digestive issues",
+      "low": "Gluten to be avoided in cases of gastric distress"
     },
     {
-      "id": "lactose",
-      "label": "Lactose Sensitivity",
-      "category": "FOOD SENSITIVITIES",
-      "min": 1,
-      "max": 10,
-      "high": "Milk & milk products need\nto be avoided",
-      "normal": "Limit milk & milk products,\nconsider lactose-free\nalternatives if needed",
-      "low": "Milk or milk products to\nbe avoided in gastric\ndistress"
-    },
-    {
-      "id": "salt",
+      "id": "field_salt_sensitivity_1752646658680",
+      "_uuid": "4086fe30-a94e-43b9-914d-7dd032448a7c",
+      "_originalId": "field_salt_sensitivity_1752646658680",
       "label": "Salt Sensitivity",
       "category": "",
       "min": 1,
-      "max": 8,
-      "high": "Try to reduce overall salt\nintake to up to 3-5 gm per\nday",
-      "normal": "Maintain salt intake\naround 5 gm per day",
-      "low": "Consumption of salt up to\n5 gm/day can be done"
+      "max": 10,
+      "high": "Try to reduce overall salt intake to up to 3-5 gm per day",
+      "normal": "Maintain salt intake around 5 gm per day",
+      "low": "Consumption of salt up to 5 gm/day can be done"
     }
   ]
 }
